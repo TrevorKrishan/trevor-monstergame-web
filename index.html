@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monster Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <section class="row">
+            <div id="you" class="fighter">
+                <h2>You</h2>
+                <div class="healthbar">
+                    <div class="health" id="you-healthbar" :style="{width: playerHealth + '%'}">{{ playerHealth }}</div>
+                </div>
+            </div>
+            <div id="monster" class="fighter">
+                <h2>Monster</h2>
+                <div class="healthbar">
+                    <div class="health" id="monster-healthbar" :style="{width: monsterHealth + '%'}">{{ monsterHealth }}</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="row battle-moves">
+            <button v-if="!gameIsRunning" @click="startNewGame" class="button start-game">Start New Game</button>
+            <template v-else>
+                <button class="button attack" @click="attack">Attack</button>
+                <button class="button special-attack" @click="specialAttack" v-if="specialAttackRemaining">Special Attack</button>
+                <button class="button heal" @click="heal">Heal</button>
+                <button class="button quit" @click="quit">Quit</button>
+            </template>    
+        </section>
+
+        <section class="row" v-if="turns.length > 0">
+            <ul class="turns-list">
+                <li v-for="turn in turns" :class="{'player-turn': turn.isPlayer,'monster-turn': !turn.isPlayer}">
+                    {{ turn.text }}
+                </li>
+            </ul>
+        </section>
+    </div>
+
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
